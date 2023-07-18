@@ -1,22 +1,30 @@
-
+from scripts.shell.shell import Shell
+import scripts.queries.queries as qr
+import scripts.queries.filters as ft
+import scripts.processor.connection as cn
 
 
 class Transmitter:
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(Transmitter, cls).__new__(cls)
-        return cls.instance
+    shell: Shell = None
 
-    def __init__(self, my_shell):
-        self.my_shell = my_shell
+    @staticmethod
+    async def transmit(query: qr.Query, filters: list[ft.Filter] = None):
+        if filters is None:
+            filters = []
+        await cn.ShellReceiver.receive(query, filters)
+        # TODO
 
+    # TODO
 
 
 class Receiver:
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(Receiver, cls).__new__(cls)
-        return cls.instance
+    shell: Shell = None
 
-    def __init__(self, my_shell):
-        self.my_shell = my_shell
+    @staticmethod
+    async def receive(query: qr.Query):
+        user = query.user_id
+        if isinstance(query, qr.RequireFilters):
+            await Receiver.shell.send_message(user, 'Fuck you:)')
+            pass
+            # TODO
+    # TODO

@@ -24,9 +24,9 @@ class Aiobot:
         self.register_handlers(self.dp)
         executor.start_polling(self.dp, skip_updates=True)
 
-    def send_message(self):
+    async def send_message(self, user: int, text: str, parse_mode: str = 'HTML'):
+        await self.bot.send_message(user, text=text, parse_mode=parse_mode)
         # TODO
-        pass
 
     def send_xlsx(self):
         # TODO
