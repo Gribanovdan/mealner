@@ -5,9 +5,9 @@ import scripts.processor.processor as pr
 
 class ShellReceiver:
     @staticmethod
-    async def receive(query: qr.Query, ft: list[ft.Filter]):
+    async def receive(query: qr.Query):
         if isinstance(query, qr.GenerateMenu):
-            await pr.MenuGenerator.processor(query.user_id, ft)
+            await pr.MenuGenerator.processor(query.user, query.filters)
 
     # TODO
     pass

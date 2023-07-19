@@ -1,5 +1,6 @@
 import os
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 import scripts.shell.handlers
 
@@ -14,8 +15,9 @@ class Aiobot:
         from scripts.shell.shell_config import AiobotConfig
         self.token = AiobotConfig.get_token()
 
+        self.storage = MemoryStorage()
         self.bot = Bot(token=self.token)
-        self.dp = Dispatcher(self.bot)
+        self.dp = Dispatcher(self.bot, storage=self.storage)
 
     def register_handlers(self, dp: Dispatcher):
         scripts.shell.handlers.register_all(dp)
@@ -27,6 +29,9 @@ class Aiobot:
     async def send_message(self, user: int, text: str, parse_mode: str = 'HTML'):
         await self.bot.send_message(user, text=text, parse_mode=parse_mode)
         # TODO
+
+    async def show_choice_menu(self, user: int, inline_kb: types.InlineKeyboardMarkup, text: str = 'Выберите фильтры:', *args):
+        await self.bot.send_message(user, text=text, reply_markup=inline_kb)
 
     def send_xlsx(self):
         # TODO

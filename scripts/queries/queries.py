@@ -1,6 +1,6 @@
 class Query:
-    def __init__(self, user_id: int):
-        self.user_id = user_id
+    def __init__(self, user: int):
+        self.user = user
 
     # TODO
     # user?
@@ -18,6 +18,9 @@ class AddProduct(Query):
 
 
 class GenerateMenu(Query):
+    def __init__(self, user: int, filters: list):
+        super().__init__(user)
+        self.filters = filters
     # TODO
     pass
 

@@ -15,12 +15,17 @@ class Shell:
         Receiver.shell = self
 
     def launch_shell(self):
+        # TODO может поумнее что-нибудь?
+        import scripts.shell.handlers as handlers
+        handlers.shell = self
         self.shell.launch()
 
     async def send_message(self, user: int, text: str, parse_mode: str = 'HTML'):
         # TODO не уверен насчет parse_mode, здесь ли это нужно делать?
         await self.shell.send_message(user, text, parse_mode)
 
+    async def show_choice_menu(self, user: int, *args):
+        await self.shell.show_choice_menu(user, *args)
 
     def send_xlsx(self):
         # TODO
