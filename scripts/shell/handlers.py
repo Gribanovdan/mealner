@@ -33,6 +33,10 @@ class TextHandlers(HandlerSet):
         await state.update_data(filters=filters)
         await shell.show_choice_menu(msg.from_user.id, kb.generating_filters_choice())
 
+    @staticmethod
+    async def list(message: types.Message, state: FSMContext):
+        await tr.transmit(qr.GetShoppingList(message.from_user.id))
+
     class GeneratingFiltersChoice(HandlerSet):
         @staticmethod
         async def tuning_budget(message: types.Message, state: FSMContext):
