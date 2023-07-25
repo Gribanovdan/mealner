@@ -37,8 +37,3 @@ def launch():
 
     DBInfo.connection = conn
     lg.log('DB launched successfully!', 20)
-
-
-launch()
-import scripts.db.dbfiller as filler
-filler.insert(DBInfo.connection)
