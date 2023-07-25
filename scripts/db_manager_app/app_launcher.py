@@ -24,6 +24,8 @@ class MainWindow(QMainWindow):  # главное окно
         self.move(screen_width // 2 - width // 2, screen_height // 2 - height // 2)
         self.setFixedSize(width, height)
 
+        # ---------------------------------[1]---------------------------------------
+
         # первая колонка (+30)
         h1 = 10
         self.lbl1 = QLabel('<b>Добавить продукт</b>', self)
@@ -103,10 +105,105 @@ class MainWindow(QMainWindow):  # главное окно
         self.status_lbl1 = QLabel('', self)
         self.status_lbl1.move(1 * width // 8 - self.btn1.width() // 2, h1)
 
+        # ------------------------------[2]----------------------------------
+
         # вторая колонка
+        h2 = 10
+
         self.lbl2 = QLabel('<b>Обновить продукт</b>', self)
         self.lbl2.adjustSize()
-        self.lbl2.move(3 * width // 8 - self.lbl2.width() // 2, 10)
+        self.lbl2.move(3 * width // 8 - self.lbl2.width() // 2, h2)
+
+        h2 += 30
+        self.btn21 = QPushButton(self)
+        self.btn21.setText('Подключиться к бд')
+        self.btn21.adjustSize()
+        self.btn21.move(3 * width // 8 - self.btn21.width() // 2, h2)
+        self.btn21.clicked.connect(self.btn21_click)
+
+        h2 += 30
+        self.cmbbx21 = QComboBox(self)
+        self.cmbbx21.addItem('...', -1)
+        self.cmbbx21.move(3 * width // 8 - self.cmbbx21.width() // 2, h2)
+        self.cmbbx21.currentTextChanged.connect(self.cmbbox21_choice)
+
+        h2 += 40
+        self.lbl21 = QLabel('Продукт', self)
+        self.lbl21.adjustSize()
+        self.lbl21.move(5 * width // 16 - self.lbl21.width() // 2, h2)
+
+        self.lbl22 = QLabel('Цена', self)
+        self.lbl22.adjustSize()
+        self.lbl22.move(7 * width // 16 - self.lbl22.width() // 2, h2)
+
+        h2 += 20
+        self.txtbox21 = QLineEdit(self)
+        self.txtbox21.resize(100, 25)
+        self.txtbox21.move(5 * width // 16 - self.txtbox21.width() // 2, h2)
+
+        self.txtbox22 = QLineEdit(self)
+        self.txtbox22.resize(100, 25)
+        self.txtbox22.move(7 * width // 16 - self.txtbox22.width() // 2, h2)
+
+        h2 += 30
+        self.lbl23 = QLabel('Ккалории', self)
+        self.lbl23.adjustSize()
+        self.lbl23.move(5 * width // 16 - self.lbl23.width() // 2, h2)
+
+        self.lbl24 = QLabel('Белки', self)
+        self.lbl24.adjustSize()
+        self.lbl24.move(7 * width // 16 - self.lbl24.width() // 2, h2)
+
+        h2 += 20
+        self.txtbox23 = QLineEdit(self)
+        self.txtbox23.resize(100, 25)
+        self.txtbox23.move(5 * width // 16 - self.txtbox23.width() // 2, h2)
+
+        self.txtbox24 = QLineEdit(self)
+        self.txtbox24.resize(100, 25)
+        self.txtbox24.move(7 * width // 16 - self.txtbox24.width() // 2, h2)
+
+        h2 += 30
+        self.lbl25 = QLabel('Жиры', self)
+        self.lbl25.adjustSize()
+        self.lbl25.move(5 * width // 16 - self.lbl25.width() // 2, h2)
+
+        self.lbl26 = QLabel('Углеводы', self)
+        self.lbl26.adjustSize()
+        self.lbl26.move(7 * width // 16 - self.lbl26.width() // 2, h2)
+
+        h2 += 20
+        self.txtbox25 = QLineEdit(self)
+        self.txtbox25.resize(100, 25)
+        self.txtbox25.move(5 * width // 16 - self.txtbox25.width() // 2, h2)
+
+        self.txtbox26 = QLineEdit(self)
+        self.txtbox26.resize(100, 25)
+        self.txtbox26.move(7 * width // 16 - self.txtbox26.width() // 2, h2)
+
+        h2 += 30
+        self.lbl27 = QLabel('Тип измерения', self)
+        self.lbl27.adjustSize()
+        self.lbl27.move(3 * width // 8 - self.lbl27.width() // 2, h2)
+        h2 += 20
+        self.cmbbx22 = QComboBox(self)
+        self.cmbbx22.move(3 * width // 8 - self.cmbbx21.width() // 2, h2)
+        self.cmbbx22.addItems(['100 гр', '1 литр', '1 шт'])
+
+        h2 += 50
+        self.btn22 = QPushButton('Обновить', self)
+        self.btn22.adjustSize()
+        self.btn22.move(3 * width // 8 - self.btn22.width() // 2, h2)
+        self.btn22.clicked.connect(self.btn22_click)
+
+        h2 += 50
+        self.btn23 = QPushButton('Удалить', self)
+        self.btn23.adjustSize()
+        self.btn23.move(3 * width // 8 - self.btn23.width() // 2, h2)
+        self.btn23.clicked.connect(self.btn23_click)
+        self.btn23.setStyleSheet('background-color: #ff7a66')
+
+        # ----------------------------[3]---------------------------
 
         # третья колонка
         self.lbl3 = QLabel('<b>Добавить блюдо</b>', self)
@@ -183,7 +280,6 @@ class MainWindow(QMainWindow):  # главное окно
         self.status_lbl1.adjustSize()
         self.status_lbl1.show()
 
-
         def on_timeout():
             self.txtbox11.setText('')
             self.txtbox12.setText('')
@@ -197,7 +293,118 @@ class MainWindow(QMainWindow):  # главное окно
         timer.timeout.connect(on_timeout)
         timer.start(1000)
 
+    def errormsg(self):
+        dlg = QDialog(self)
+        dlg.setWindowTitle('Ошибка')
+        dlg.label = QLabel(dlg)
+        dlg.label.setText('Ошибка!')
+        dlg.label.move(70, 40)
+        dlg.setFixedSize(200, 100)
+        dlg.exec()
 
+    @pyqtSlot()
+    def btn21_click(self):
+        try:
+            db.launch()
+        except:
+            self.errormsg()
+            return
+
+        conn = db.DBInfo.connection
+        cur = conn.cursor()
+
+        try:
+            q = 'select * from main.product;'
+            cur.execute(q)
+            res = cur.fetchall()
+        except Exception as err:
+            self.errormsg()
+            lg.log(str(err), 40)
+            return
+        lg.log('connection succeeded (update product route)', 20)
+
+        self.products = {}
+        for info in res:
+            pr = ent.Creator.create_product(*(info[1:]))
+            self.products[info[0]] = pr
+        lg.log('products added to local db', 20)
+
+        self.cmbbx21.clear()
+        for id, pr in self.products.items():
+            self.cmbbx21.addItem(f'{pr.name}', id)
+
+        lg.log('products added to combobox', 20)
+
+        return True
+
+    @pyqtSlot()
+    def btn22_click(self):
+        id = self.cmbbx21.currentData()
+        name = self.txtbox21.text()
+        price = self.txtbox22.text()
+        kkalories = self.txtbox23.text()
+        protein = self.txtbox24.text()
+        fats = self.txtbox25.text()
+        carbohydrates = self.txtbox26.text()
+        measure = self.cmbbx22.currentText()
+
+        def check(obj, clas):
+            try:
+                clas(obj)
+            except:
+                return False
+            return True
+
+        ok = True
+        if not check(id, int) or id == '':
+            ok = False
+        if name == '':
+            ok = False
+        if not check(price, int) or price == '':
+            ok = False
+        if not check(kkalories, int) or kkalories == '':
+            ok = False
+        if not check(protein, float) or protein == '':
+            ok = False
+        if not check(fats, float) or fats == '':
+            ok = False
+        if not check(carbohydrates, float) or carbohydrates == '':
+            ok = False
+        if measure == '':
+            ok = False
+        if not ok:
+            lg.log('wrong type', 30)
+            self.errormsg()
+            return
+        # TODO подключение к бд, обновление
+
+    @pyqtSlot()
+    def btn23_click(self):
+        print('удалить')
+        # TODO
+        pass
+
+    @pyqtSlot()
+    def cmbbox21_choice(self):
+        if self.cmbbx21.currentText() == '':
+            return
+        try:
+            id = self.cmbbx21.currentData()
+            pr = self.products[id]
+
+            self.txtbox21.setText(pr.name)
+            self.txtbox22.setText(str(pr.cost))
+            self.txtbox23.setText(str(pr.kkalories))
+            self.txtbox24.setText(str(pr.protein))
+            self.txtbox25.setText(str(pr.fats))
+            self.txtbox26.setText(str(pr.carbohydrates))
+            self.cmbbx22.setCurrentText(str(pr.measure))
+        except Exception as err:
+            lg.log(str(err), 40)
+            self.errormsg()
+            return None
+        lg.log('item selected', 20)
+        return True
 
 def launch():
     app = QApplication(sys.argv)

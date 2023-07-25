@@ -70,15 +70,15 @@ def insert_product(product: ent):
         ('carbohydrates', 'real'),
         ('measure', 'varchar(15)')
     ]
-    code = create_table('dish', atr)
+    code = create_table('product', atr)
 
     # TODO найти первый не занятый айди
 
-    find_ind_q = f'select max(id) from main.dish;'
+    find_ind_q = f'select max(id) from main.product;'
     try:
         cursor.execute(find_ind_q)
         res = cursor.fetchall()[0]
-        if res is not None:
+        if res[0] is not None:
             id = int(res[0]) + 1
         else:
             id = 0
@@ -88,7 +88,7 @@ def insert_product(product: ent):
 
     lg.log(f'id for new product will be: {id}', 20)
 
-    q = f'insert into main.dish values\n'
+    q = f'insert into main.product values\n'
 
     q += f"({id}, '{product.name}', {product.cost}, {product.kkalories}, {product.protein}, {product.fats}, {product.carbohydrates}, '{str(product.measure)}');"
 
